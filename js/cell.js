@@ -1,19 +1,22 @@
 /* Crossy
- * Cell in a crossword
+ * A cell in a crossword
  */
 
+/* Enum of cell types */
 const CellType = {
   Solid: Symbol("SolidCell"),
   Letter: Symbol("LetterCell"),
   Clue: Symbol("ClueCell"),
 };
 
+/* Enum of letter cell types */
 const LetterCellType = {
   Normal: Symbol("LetterCellNormal"),
   SplitDiagLeft: Symbol("LetterCellSplitDiagLeft"),
   SplitDiagRight: Symbol("LetterCellSplitDiagRight"),
 };
 
+/* Bitfield of clue cell arrows */
 const ClueCellArrow = {
   Up: 0x1,
   Down: 0x2,
@@ -48,6 +51,7 @@ const ClueCellArrow = {
   TurnMask: 0xff000,
 };
 
+/* Maps a "straight" arrow to a cell id */
 const ClueArrowStraightMap = {
   [ClueCellArrow.Up]: "clue-arrow-up",
   [ClueCellArrow.Down]: "clue-arrow-down",
@@ -55,6 +59,7 @@ const ClueArrowStraightMap = {
   [ClueCellArrow.Right]: "clue-arrow-right",
 };
 
+/* Maps a diagonal arrow to a cell id */
 const ClueArrowDiagonalMap = {
   [ClueCellArrow.DiagUpLeft]: "clue-arrow-diag-ul",
   [ClueCellArrow.DiagUpRight]: "clue-arrow-diag-ur",
@@ -62,6 +67,7 @@ const ClueArrowDiagonalMap = {
   [ClueCellArrow.DiagDownRight]: "clue-arrow-diag-dr",
 };
 
+/* Maps a reverse arrow to a cell id */
 const ClueArrowReverseMap = {
   [ClueCellArrow.UpReverse]: "clue-arrow-up",
   [ClueCellArrow.DownReverse]: "clue-arrow-down",
@@ -69,6 +75,7 @@ const ClueArrowReverseMap = {
   [ClueCellArrow.RightReverse]: "clue-arrow-right",
 };
 
+/* Maps a "turn" arrow to a cell id */
 const ClueArrowTurnMap = {
   [ClueCellArrow.UpLeft]: "clue-arrow-ul",
   [ClueCellArrow.UpRight]: "clue-arrow-up",
@@ -80,10 +87,14 @@ const ClueArrowTurnMap = {
   [ClueCellArrow.RightDown]: "clue-arrow-right",
 };
 
+/* Cell
+ * A Cell in a Crossword
+ */
 class Cell {
   constructor(type, n) {
     this.type = type;
     this.n = n;
+    this.element = document.createElement("div");
 
     switch (type) {
       case CellType.Solid:
@@ -100,10 +111,12 @@ class Cell {
     this.updateElement();
   }
 
+  /* Creates the default data for a letter cell */
   createDefaultLetterData() {
     return this.createLetterData(LetterCellType.Normal, "");
   }
 
+  /* Creates the data object for a letter cell */
   createLetterData(type, text) {
     return {
       type: type,
@@ -111,10 +124,12 @@ class Cell {
     };
   }
 
+  /* Creates the default data for a clue cell */
   createDefaultClueData() {
-    return this.createClueData(["uma grande dica"], 3, []);
+    return this.createClueData(["hint text here"], ClueCellArrow.Up, []);
   }
 
+  /* Creates the data object for a clue cell */
   createClueData(text, arrows, dynamic) {
     return {
       text: text,
@@ -123,39 +138,80 @@ class Cell {
     };
   }
 
+  /* Adds a new dynamic arrow */
   addDynamicClueArrow(clue, type) {
     this.data.dynamic.push({ clue: clue, type: type });
     this.updateElement();
   }
 
-  addClueText(text) {
-    this.data.text.add(text);
+  /* Sets the text content of a clue
+   * Each line in the text is treated as a separate clue and will be split visually
+   */
+  setClueText(text) {
+    this.data.text = [];
+    text.split(/\r?\n/).forEach((line) => {
+      this.data.text.push(line);
+    });
+
     this.updateElement();
   }
 
+  /* Appends text to the text array */
+  addClueText(text) {
+    this.data.text.push(text);
+    this.updateElement();
+  }
+
+  /* Adds an arrow type */
+  addClueArrow(arrow) {
+    const old = this.data.arrows;
+    this.data.arrows |= arrow;
+
+    if (old !== this.data.arrows) {
+      this.updateElement();
+    }
+  }
+
+  /* Removes an arrow type */
+  removeClueArrow(arrow) {
+    const old = this.data.arrows;
+    this.data.arrows &= ~arrow;
+
+    if (old !== this.data.arrows) {
+      this.updateElement();
+    }
+  }
+
+  /* Updates the HTML element that represents this cell */
   updateElement() {
+    while (this.element.firstChild) {
+      this.element.removeChild(this.element.lastChild);
+    }
+
     switch (this.type) {
       case CellType.Solid:
-        this.element = this.createSolidElement();
+        this.createSolidElement();
         break;
       case CellType.Letter:
-        this.element = this.createLetterElement();
+        this.createLetterElement();
         break;
       case CellType.Clue:
-        this.element = this.createClueElement();
+        this.createClueElement();
         break;
       default:
         throw new Error(`Invalid cell type "${this.type.toString()}"`);
     }
   }
 
+  /* Creates a new element representing a solid cell */
   createSolidElement() {
     let el = this.createBaseElement();
     el.classList.add("solid-cell");
 
-    return el;
+    this.element.appendChild(el);
   }
 
+  /* Creates a new element representing a letter cell */
   createLetterElement() {
     let el = this.createBaseElement();
     el.classList.add("letter-cell");
@@ -172,9 +228,10 @@ class Cell {
         break;
     }
 
-    return el;
+    this.element.appendChild(el);
   }
 
+  /* Creates a left split in a letter cell */
   createSplitLeft(el) {
     let line = this.createSplitLineLeft();
     line.id = `${el.id}-split`;
@@ -192,6 +249,7 @@ class Cell {
     el.appendChild(t2);
   }
 
+  /* Creates a left line split in a letter cell */
   createSplitLineLeft() {
     let el = document.createElement("div");
     el.classList.add("letter-cell-split");
@@ -200,6 +258,7 @@ class Cell {
     return el;
   }
 
+  /* Creates a right split in a letter cell */
   createSplitRight(el) {
     let line = this.createSplitLineRight();
     line.id = `${el.id}-split`;
@@ -217,6 +276,7 @@ class Cell {
     el.appendChild(t2);
   }
 
+  /* Creates a right line split in a letter cell */
   createSplitLineRight() {
     let el = document.createElement("div");
     el.classList.add("letter-cell-split");
@@ -225,6 +285,7 @@ class Cell {
     return el;
   }
 
+  /* Creates the input field for a letter */
   createLetterTextInput() {
     let el = document.createElement("input");
     el.classList.add("letter-cell-input");
@@ -235,6 +296,7 @@ class Cell {
     return el;
   }
 
+  /* Creates a new element representing a clue cell */
   createClueElement() {
     let el = this.createBaseElement();
     el.classList.add("clue-cell");
@@ -313,9 +375,10 @@ class Cell {
       el.appendChild(clue);
     }
 
-    return el;
+    this.element.appendChild(el);
   }
 
+  /* Adds all "straight" arrows (if any) to the cell */
   createClueStraightArrows(el) {
     for (const KEY in ClueArrowStraightMap) {
       if (this.data.arrows & KEY) {
@@ -324,10 +387,12 @@ class Cell {
     }
   }
 
+  /* Creates a "straight" arrow */
   createStraightArrow(el, arrowClass) {
     this.createClueArrow(el, "assets/svg_arrow_straight.svg", arrowClass);
   }
 
+  /* Adds all diagonal arrows (if any) to the cell */
   createClueDiagonalArrows(el) {
     for (const KEY in ClueArrowDiagonalMap) {
       if (this.data.arrows & KEY) {
@@ -336,10 +401,12 @@ class Cell {
     }
   }
 
+  /* Creates a diagonal arrow */
   createDiagonalArrow(el, arrowClass) {
     this.createClueArrow(el, "assets/svg_arrow_diagonal.svg", arrowClass);
   }
 
+  /* Adds all reverse arrows (if any) to the cell */
   createClueReverseArrows(el) {
     for (const KEY in ClueArrowReverseMap) {
       if (this.data.arrows & KEY) {
@@ -348,10 +415,12 @@ class Cell {
     }
   }
 
+  /* Creates a reverse arrow */
   createReverseArrow(el, arrowClass) {
     this.createClueArrow(el, "assets/svg_arrow_reverse.svg", arrowClass);
   }
 
+  /* Adds all "turn" arrows (if any) to the cell */
   createClueTurnArrows(el) {
     for (const KEY in ClueArrowTurnMap) {
       if (this.data.arrows & KEY) {
@@ -360,10 +429,12 @@ class Cell {
     }
   }
 
+  /* Creates a turn arrow */
   createTurnArrow(el, arrowClass) {
     this.createClueArrow(el, "assets/svg_arrow_turn.svg", arrowClass);
   }
 
+  /* Creates a clue arrow */
   createClueArrow(el, path, arrowClass) {
     let arrow = this.newClueArrow(path);
     arrow.classList.add(arrowClass);
@@ -371,6 +442,7 @@ class Cell {
     el.appendChild(arrow);
   }
 
+  /* Creates a new clue arrow element */
   newClueArrow(path) {
     let arrow = document.createElement("img");
     arrow.classList.add("clue-arrow");
@@ -379,6 +451,7 @@ class Cell {
     return arrow;
   }
 
+  /* Creates the element containing the clue text */
   createClueTextElement(text) {
     let el = document.createElement("div");
     el.classList.add("clue-cell-text");
@@ -391,6 +464,7 @@ class Cell {
     return el;
   }
 
+  /* Creates the base cell element */
   createBaseElement() {
     let el = document.createElement("div");
 
@@ -400,19 +474,28 @@ class Cell {
     return el;
   }
 
+  /* Returns the cell HTML element */
   asElement() {
     return this.element;
   }
+
+  /* Returns the cell data */
+  getData() {
+    return this.data;
+  }
 }
 
+/* Creates a new solid cell */
 function createSolidCell(n) {
   return new Cell(CellType.Solid, n);
 }
 
+/* Creates a new cell containing a letter */
 function createLetterCell(n) {
   return new Cell(CellType.Letter, n);
 }
 
+/* Creates a new cell containing a clue */
 function createClueCell(n) {
   return new Cell(CellType.Clue, n);
 }
