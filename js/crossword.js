@@ -67,6 +67,43 @@ class Crossword {
     const IDX = Number(MATCH[1]);
     return this.cells[IDX];
   }
+
+  enterEditingMode() {
+    let previousFocus = null;
+
+    const cells = document.querySelectorAll(".crossword-cell");
+    cells.forEach((el) => {
+      const cell = this.getCellFromElement(el);
+      cell.enterEditingMode();
+
+      el.onmousedown = () => {
+        if (previousFocus) {
+          const prevCell = this.getCellFromElement(previousFocus);
+          prevCell.unfocus();
+        }
+
+        cell.focus();
+
+        updateTileOptions(el);
+        previousFocus = el;
+
+        return false;
+      };
+    });
+
+    const firstElement = cells[0];
+    firstElement.onmousedown();
+  }
+
+  enterSolvingMode() {
+    document.querySelectorAll(".crossword-cell").forEach((el) => {
+      const cell = this.getCellFromElement(el);
+      cell.enterSolvingMode();
+
+      console.log("unset!");
+      el.onmousedown = () => {};
+    });
+  }
 }
 
 let crossword = new Crossword();

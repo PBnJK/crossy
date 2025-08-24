@@ -11,15 +11,15 @@ body {
 }
 
 #wrapper {
+  display: flex;
+
   margin-top: 12px;
   margin-left: 12px;
 }
 
-#control {
-  float: left;
-
-  min-width: var(--box-size);
-  min-height: var(--box-size);
+.control {
+  width: 256px;
+  min-height: 512px;
 
   margin-right: 48px;
 
@@ -31,22 +31,17 @@ body {
   font-family: "Verdana", sans-serif;
 }
 
+#control-main {
+  max-height: 512px;
+}
+
 #control-title {
   margin-bottom: 0;
-
   font-family: "Verdana", sans-serif;
 }
 
 #control-subtitle {
   margin-top: 0;
-}
-
-.control-inner-box {
-  padding: 0px 8px;
-  margin-bottom: 8px;
-
-  border: 2px solid black;
-  border-radius: 6px;
 }
 
 .control-inner-title {
@@ -99,6 +94,57 @@ body {
   grid-area: e;
 }
 
+#ct-clue-arrow-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+
+.ct-clue-arrow-checkbox {
+  display: none;
+}
+
+.ct-clue-img {
+  object-position: -24px 0px;
+}
+
+.ct-clue-img:hover {
+  background-color: #aaa;
+  cursor: pointer;
+}
+
+.ct-clue-img-up {
+  transform: rotate(90deg);
+}
+
+.ct-clue-img-down {
+  transform: rotate(-90deg);
+}
+
+.ct-clue-img-right {
+  transform: rotate(180deg);
+}
+
+.ct-clue-img-d {
+  object-position: -24px -24px;
+}
+
+.ct-clue-img-flip-up {
+  transform: scaleY(-1) rotate(-90deg);
+}
+
+.ct-clue-img-flip-down {
+  transform: scaleY(-1) rotate(90deg);
+}
+
+.ct-clue-img-flip-left {
+  transform: scaleY(-1);
+}
+
+.ct-clue-img-flip-right {
+  transform: scaleY(-1) rotate(180deg);
+}
+
 label,
 input,
 select,
@@ -110,8 +156,8 @@ textarea {
 #crossword {
   display: inline-grid;
 
-  min-width: var(--box-size);
-  min-height: var(--box-size);
+  max-width: var(--box-size);
+  max-height: var(--box-size);
 
   grid-template-rows: repeat(4, 1fr);
   grid-template-columns: repeat(4, 1fr);

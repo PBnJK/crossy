@@ -12,55 +12,52 @@
   </head>
   <body>
     <div id="wrapper">
-      <div id="control">
+      <div class="control" id="control-main">
         <h1 id="control-title"><i>Crossy!</i></h1>
         <p id="control-subtitle">(a crossword editor)</p>
         <hr />
-        <div class="control-inner-box" id="control-main">
-          <h2 class="control-inner-title"><i>Main</i></h2>
-          <hr />
-          <div id="control-main-options">
-            <label id="cw-title-label">
-              Title
-              <input type="text" id="cw-title" placeholder="Your title" />
-            </label>
-            <label id="cw-author-label">
-              Author
-              <input type="text" id="cw-author" placeholder="Your name" />
-            </label>
-            <label id="cw-description-label">
-              Description
-              <textarea
-                id="cw-description"
-                id="cw-description"
-                placeholder="Thoughtful description"
-              ></textarea>
-            </label>
-            <label id="cw-width-label">
-              Width
-              <input type="number" id="cw-width" value="4" min="2" max="64" />
-            </label>
-            <label id="cw-height-label">
-              Height
-              <input type="number" id="cw-height" value="4" min="2" max="64" />
-            </label>
-          </div>
-        </div>
-        <div class="control-inner-box" id="control-tile">
-          <h2 class="control-inner-title"><i>Tile</i></h2>
-          <hr />
-          <div id="control-tile-options">
-            <label id="ct-type-label">
-              Type
-              <select id="ct-type">
-                <option value="solid-cell">Solid</option>
-                <option value="letter-cell">Letter</option>
-                <option value="clue-cell">Clue</option>
-              </select>
-            </label>
-          </div>
+        <div id="control-main-options">
+          <label id="cw-title-label">
+            Title
+            <input type="text" id="cw-title" placeholder="Your title" />
+          </label>
+          <label id="cw-author-label">
+            Author
+            <input type="text" id="cw-author" placeholder="Your name" />
+          </label>
+          <label id="cw-description-label">
+            Description
+            <textarea
+              id="cw-description"
+              id="cw-description"
+              placeholder="Thoughtful description"
+            ></textarea>
+          </label>
+          <label id="cw-width-label">
+            Width
+            <input type="number" id="cw-width" value="4" min="2" max="64" />
+          </label>
+          <label id="cw-height-label">
+            Height
+            <input type="number" id="cw-height" value="4" min="2" max="64" />
+          </label>
         </div>
       </div>
+      <div class="control" id="control-tile">
+        <h2 class="control-inner-title"><i>Tile</i></h2>
+        <hr />
+        <div id="control-tile-options">
+          <label id="ct-type-label">
+            Type
+            <select id="ct-type">
+              <option value="solid-cell">Solid</option>
+              <option value="letter-cell">Letter</option>
+              <option value="clue-cell">Clue</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
       <div id="crossword">
         <!-- Crossword is inserted here -->
       </div>

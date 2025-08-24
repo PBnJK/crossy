@@ -68,29 +68,32 @@ function createClueCellOptions() {
 <fieldset>
 	<legend>Arrows</legend>
 
-	<label>Up <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-up"/></label>
-	<label>Down <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-down"/></label>
-	<label>Left <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-left"/></label>
-	<label>Right <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-right"/></label>
+  <div id="ct-clue-arrow-grid">
+    <label><img class="ct-clue-img ct-clue-img-up" src="assets/svg_arrow_straight.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-up"/></label>
+    <label><img class="ct-clue-img ct-clue-img-down" src="assets/svg_arrow_straight.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-down"/></label>
+    <label><img class="ct-clue-img ct-clue-img-left" src="assets/svg_arrow_straight.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-left"/></label>
+    <label><img class="ct-clue-img ct-clue-img-right" src="assets/svg_arrow_straight.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-right"/></label>
 
-	<label>Diagonal Up-Left <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-d-ul"/></label>
-	<label>Diagonal Up-Right <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-d-ur"/></label>
-	<label>Diagonal Down-Left <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-d-dl"/></label>
-	<label>Diagonal Down-Right <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-d-dr"/></label>
+    <label><img class="ct-clue-img ct-clue-img-d" src="assets/svg_arrow_diagonal.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-d-ul"/></label>
+    <label><img class="ct-clue-img ct-clue-img-d ct-clue-img-up" src="assets/svg_arrow_diagonal.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-d-ur"/></label>
+    <label><img class="ct-clue-img ct-clue-img-d ct-clue-img-down" src="assets/svg_arrow_diagonal.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-d-dl"/></label>
+    <label><img class="ct-clue-img ct-clue-img-d ct-clue-img-right" src="assets/svg_arrow_diagonal.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-d-dr"/></label>
 
-	<label>Reverse Up <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-rev-u"/></label>
-	<label>Reverse Down <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-rev-d"/></label>
-	<label>Reverse Left <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-rev-l"/></label>
-	<label>Reverse Right <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-rev-r"/></label>
+    <label><img class="ct-clue-img ct-clue-img-up" src="assets/svg_arrow_reverse.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-rev-u"/></label>
+    <label><img class="ct-clue-img ct-clue-img-down" src="assets/svg_arrow_reverse.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-rev-d"/></label>
+    <label><img class="ct-clue-img ct-clue-img-left" src="assets/svg_arrow_reverse.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-rev-l"/></label>
+    <label><img class="ct-clue-img ct-clue-img-right" src="assets/svg_arrow_reverse.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-rev-r"/></label>
 
-	<label>Up-Left <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-ul"/></label>
-	<label>Up-Right <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-ur"/></label>
-	<label>Down-Left <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-dl"/></label>
-	<label>Down-Right <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-dr"/></label>
-	<label>Left-Up <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-lu"/></label>
-	<label>Left-Down <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-ld"/></label>
-	<label>Right-Up <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-ru"/></label>
-	<label>Right-Down <input class="ct-clue-arrow-checkbox" type="checkbox" id="ct-clue-arrow-rd"/></label>
+    <label><img class="ct-clue-img ct-clue-img-flip-up" src="assets/svg_arrow_turn.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-ul"/></label>
+    <label><img class="ct-clue-img ct-clue-img-up" src="assets/svg_arrow_turn.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-ur"/></label>
+    <label><img class="ct-clue-img ct-clue-img-down" src="assets/svg_arrow_turn.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-dl"/></label>
+    <label><img class="ct-clue-img ct-clue-img-flip-down" src="assets/svg_arrow_turn.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-dr"/></label>
+
+    <label><img class="ct-clue-img" src="assets/svg_arrow_turn.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-lu"/></label>
+    <label><img class="ct-clue-img ct-clue-img-flip-left" src="assets/svg_arrow_turn.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-ld"/></label>
+    <label><img class="ct-clue-img ct-clue-img-flip-right" src="assets/svg_arrow_turn.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-ru"/></label>
+    <label><img class="ct-clue-img ct-clue-img-right" src="assets/svg_arrow_turn.svg" /><input type="checkbox" class="ct-clue-arrow-checkbox" id="ct-clue-arrow-rd"/></label>
+  </div>
 </fieldset>
 <label id="ct-clue-text-label">
   Solution
@@ -167,43 +170,8 @@ function updateTileOptions(el) {
   }
 }
 
-function enterEditingMode() {
-  let previousFocus = null;
-
-  const cells = document.querySelectorAll(".crossword-cell");
-  cells.forEach((el) => {
-    el.setAttribute("tabindex", "0");
-    el.classList.add("focusable-cell");
-
-    el.onmousedown = () => {
-      if (previousFocus) {
-        previousFocus.classList.remove("selected-cell");
-      }
-
-      updateTileOptions(el);
-
-      el.classList.add("selected-cell");
-      previousFocus = el;
-
-      return false;
-    };
-  });
-
-  const firstElement = cells[0];
-  firstElement.onmousedown();
-}
-
-function enterSolvingMode() {
-  document.querySelectorAll(".crossword-cell").forEach((el) => {
-    el.setAttribute("tabindex", "1");
-    el.classList.remove("focusable-cell");
-
-    el.onmousedown = () => {};
-  });
-}
-
 function init() {
-  enterEditingMode();
+  crossword.enterEditingMode();
   // enterSolvingMode();
 }
 

@@ -91,6 +91,8 @@ const ClueArrowTurnMap = {
  * A Cell in a Crossword
  */
 class Cell {
+  #isEditingMode = false;
+
   constructor(type, n) {
     this.type = type;
     this.n = n;
@@ -109,6 +111,32 @@ class Cell {
     }
 
     this.updateElement();
+  }
+
+  focus() {
+    const el = this.asElement();
+    el.classList.add("selected-cell");
+  }
+
+  unfocus() {
+    const el = this.asElement();
+    el.classList.remove("selected-cell");
+  }
+
+  enterEditingMode() {
+    const el = this.asElement();
+    el.setAttribute("tabindex", "0");
+    el.classList.add("focusable-cell");
+
+    this.#isEditingMode = true;
+  }
+
+  enterSolvingMode() {
+    const el = this.asElement();
+    el.setAttribute("tabindex", "1");
+    el.classList.remove("focusable-cell");
+
+    this.#isEditingMode = false;
   }
 
   /* Creates the default data for a letter cell */
@@ -184,35 +212,45 @@ class Cell {
 
   /* Updates the HTML element that represents this cell */
   updateElement() {
+    const onmousedown =
+      this.element.querySelector(".crossword-cell")?.onmousedown;
+
     while (this.element.firstChild) {
       this.element.removeChild(this.element.lastChild);
     }
 
     switch (this.type) {
       case CellType.Solid:
-        this.createSolidElement();
+        this.createSolidElement(onmousedown);
         break;
       case CellType.Letter:
-        this.createLetterElement();
+        this.createLetterElement(onmousedown);
         break;
       case CellType.Clue:
-        this.createClueElement();
+        this.createClueElement(onmousedown);
         break;
       default:
         throw new Error(`Invalid cell type "${this.type.toString()}"`);
     }
+
+    if (this.#isEditingMode) {
+      this.enterEditingMode();
+    } else {
+      this.enterSolvingMode();
+    }
   }
 
   /* Creates a new element representing a solid cell */
-  createSolidElement() {
+  createSolidElement(onmousedown) {
     let el = this.createBaseElement();
     el.classList.add("solid-cell");
+    el.onmousedown = onmousedown;
 
     this.element.appendChild(el);
   }
 
   /* Creates a new element representing a letter cell */
-  createLetterElement() {
+  createLetterElement(onmousedown) {
     let el = this.createBaseElement();
     el.classList.add("letter-cell");
 
@@ -228,6 +266,7 @@ class Cell {
         break;
     }
 
+    el.onmousedown = onmousedown;
     this.element.appendChild(el);
   }
 
@@ -297,7 +336,7 @@ class Cell {
   }
 
   /* Creates a new element representing a clue cell */
-  createClueElement() {
+  createClueElement(onmousedown) {
     let el = this.createBaseElement();
     el.classList.add("clue-cell");
 
@@ -375,6 +414,7 @@ class Cell {
       el.appendChild(clue);
     }
 
+    el.onmousedown = onmousedown;
     this.element.appendChild(el);
   }
 
