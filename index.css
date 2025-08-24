@@ -1,0 +1,278 @@
+:root {
+	--cw-size: 96px;
+	--ncw-size: calc(0px - var(--cw-size));
+	--box-size: calc(var(--cw-size) * 4);
+
+	--skew: calc(var(--ncw-size) / 2);
+}
+
+body {
+	margin: 0;
+}
+
+#wrapper {
+	margin-top: 12px;
+	margin-left: 12px;
+}
+
+#control {
+	float: left;
+
+	min-width: var(--box-size);
+	min-height: var(--box-size);
+
+	margin-right: 48px;
+
+	padding: 0px 24px;
+
+	border: 2px solid black;
+	border-radius: 12px;
+
+	font-family: "Verdana", sans-serif;
+}
+
+#control-title {
+	margin-bottom: 0;
+
+	font-family: "Verdana", sans-serif;
+}
+
+#control-subtitle {
+	margin-top: 0;
+}
+
+.control-inner-box {
+	padding: 0px 8px;
+	margin-bottom: 8px;
+
+	border: 2px solid black;
+	border-radius: 6px;
+}
+
+.control-inner-title {
+	margin: 8px 0;
+
+	font-family: "Verdana", sans-serif;
+	font-size: 14pt;
+
+	color: #444;
+}
+
+#control-main-options {
+	display: grid;
+	grid-template:
+		"a a" 60px
+		"b b" 60px
+		"c c" 80px
+		"c c" 80px
+		"d e" 80px / 1fr 1fr;
+}
+
+#cw-title-label {
+	grid-area: a;
+}
+
+#cw-author-label {
+	grid-area: b;
+}
+
+#cw-description-label {
+	grid-area: c;
+}
+
+#cw-description {
+	width: 100%;
+	width: -moz-available;
+	width: -webkit-fill-available;
+	width: stretch;
+
+	height: 112px;
+
+	resize: none;
+
+}
+
+#cw-width-label {
+	grid-area: d;
+}
+
+#cw-height-label {
+	grid-area: e;
+}
+
+label, input, select, textarea {
+	display: block;
+	font-family: "Verdana", sans-serif;
+}
+
+#crossword {
+	display: inline-grid;
+
+	min-width: var(--box-size);
+	min-height: var(--box-size);
+
+	grid-template-rows: repeat(4, 1fr);
+	grid-template-columns: repeat(4, 1fr);
+	grid-gap: 2px;
+
+	box-sizing: border-box;
+}
+
+.crossword-cell {
+	width: var(--cw-size);
+	height: var(--cw-size);
+
+	outline: 2px solid black;
+}
+
+.solid-cell {
+	background-color: black;
+}
+
+.letter-cell {
+	display: flex;
+}
+
+.letter-cell-input {
+	min-width: 0;
+
+	border: none;
+	outline: 0;
+
+	text-align: center;
+	text-transform: uppercase;
+
+	font-family: "Helvetica", sans-serif;
+	font-size: 20pt;
+}
+
+.letter-cell-input-tl {
+	padding-left: 4px;
+	padding-bottom: 20px;
+}
+
+.letter-cell-input-tr {
+	padding-right: 4px;
+	padding-bottom: 20px;
+}
+
+.letter-cell-input-bl {
+	padding-left: 4px;
+	padding-top: 20px;
+}
+
+.letter-cell-input-br {
+	padding-right: 4px;
+	padding-top: 20px;
+}
+
+.letter-cell-split {
+	position: absolute;
+	pointer-events: none;
+
+	width: var(--cw-size);
+	height: var(--cw-size);
+
+	border-right: 1px solid black;
+}
+
+.letter-cell-split-dl {
+	transform: translateX(var(--skew)) skew(45deg);
+}
+
+.letter-cell-split-dr {
+	transform: translateX(var(--skew)) skew(-45deg);
+}
+
+.clue-cell {
+	background-color: lightgray;
+
+	display: flex;
+	flex-direction: column;
+
+	align-items: center;
+	justify-content: center;
+}
+
+.clue-cell-text {
+	flex: 1;
+
+	width: 100%;
+
+	text-align: center;
+	align-content: center;
+
+	font-family: "Helvetica", sans-serif;
+}
+
+.clue-cell-text:not(:first-of-type) {
+	border-top: 2px dotted black;
+}
+
+.clue-arrow {
+	position: absolute;
+	pointer-events: none;
+
+	width: var(--cw-size);
+	height: var(--cw-size);
+}
+
+.clue-arrow-up {
+	transform: rotate(90deg) translateX(var(--ncw-size));
+}
+
+.clue-arrow-down {
+	transform: rotate(-90deg) translateX(var(--ncw-size));
+}
+
+.clue-arrow-left {
+	transform: translateX(var(--ncw-size));
+}
+
+.clue-arrow-right {
+	transform: rotate(180deg) translateX(var(--ncw-size));
+}
+
+.clue-arrow-diag-ul {
+	transform: translate(var(--ncw-size), var(--ncw-size));
+}
+
+.clue-arrow-diag-ur {
+	transform: rotate(90deg) translate(var(--ncw-size), var(--ncw-size));
+}
+
+.clue-arrow-diag-dl {
+	transform: rotate(-90deg) translate(var(--ncw-size), var(--ncw-size));
+}
+
+.clue-arrow-diag-dr {
+	transform: rotate(180deg) translate(var(--ncw-size), var(--ncw-size));
+}
+
+.clue-arrow-ul {
+	transform: scaleX(-1) rotate(90deg) translateX(var(--ncw-size));
+}
+
+.clue-arrow-dr {
+	transform: scaleX(-1) rotate(-90deg) translateX(var(--ncw-size));
+}
+
+.clue-arrow-ld {
+	transform: scaleY(-1) translateX(var(--ncw-size));
+}
+
+.clue-arrow-ru {
+	transform: scaleY(-1) rotate(180deg) translateX(var(--ncw-size));
+}
+
+.focusable-cell, .focusable-cell input {
+	cursor: pointer;
+}
+
+.focusable-cell:hover input {
+	background-color: #CCF;
+}
+
+.selected-cell, .selected-cell input {
+	background-color: #AAC;
+}
